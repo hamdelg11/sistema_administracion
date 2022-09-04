@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Sistema</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+	crossorigin="anonymous">
+</head>
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/">Sistema administración</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</nav>
+
+	<div class="container text-center">
+		<div>
+			<h1 th:if="${pedimento.id==null}">Agregar un pedimento</h1>
+			<h1 th:unless="${pedimento.id==null}">Editar un pedimento</h1>
+		</div>
+		<form th:action="@{/pedimentos/guardar}" th:object="${pedimento}"
+			method="post" style="max-width: 600px; margin: 0 auto;">
+			<input type="hidden" th:field="*{id}" th:value="${pedimento.id}" />
+			<div class="m-3">
+				<div class="form-group row">
+						<label class="col-form-label col-sm-4">Descripción :
+						</label>
+						<div class="col-sm-8">
+							<input type="text" th:field="*{descripcion}" class="form-control"
+								required />
+						</div>
+				</div>
+				<br>
+				<div class="form-group row">
+						<label class="col-form-label col-sm-4">Total de piezas :
+						</label>
+						<div class="col-sm-8">
+							<input type="number" th:field="*{total_pzas}" class="form-control"
+								required />
+						</div>
+				 </div>
+				 <br>
+				 <div class="form-group row">
+						<label class="col-form-label col-sm-4">Costo total :
+						</label>
+						<div class="col-sm-8">
+							<input type="number" th:field="*{costo_total}" class="form-control"
+								required />
+						</div>
+				 </div>
+				 <br>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-4">Fecha de entrega :
+						</label>
+						<div class="col-sm-8">
+							<input type="date" th:field="*{fecha_entrega}" class="form-control"
+								required />
+						</div>		
+					</div>			
+					<br>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-4"> No de parte : </label>
+						<div class="col-sm-8">
+							<select th:field="*{refaccion}" class="form-control" required>
+								<th:block th:each="refaccion : ${listaRefacciones}">
+									<option th:text="${refaccion.no_parte}" th:value="${refaccion.id}"></option>
+								</th:block>
+							</select>
+						</div>
+				   </div>		
+					<br>			
+					<div class="form-group row">
+						<label class="col-form-label col-sm-4"> Proveedor : </label>
+						<div class="col-sm-8">
+							<select th:field="*{proveedor}" class="form-control" required>
+								<th:block th:each="proveedor : ${listaProveedores}">
+									<option th:text="${proveedor.nombre}" th:value="${proveedor.id}"></option>
+								</th:block>
+							</select>
+						</div>
+				   </div>
+				   <br>	
+				<div class="text-center p">
+				<br>
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>
